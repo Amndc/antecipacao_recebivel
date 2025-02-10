@@ -1,0 +1,35 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-start">
+    <h1 class="display-6">Cadastro Empresa</h1>
+    <form method="post">  
+        <div class="col-12 row d-flex gap-3">
+            <div class="col-8 ">
+                 <label for="nome">Nome da Empresa</label>
+                <input type="text" class="form-control" name="nome" id="nome" value="" />
+            </div>
+            <div class="col-8">
+                <label for="cnpj">CNPJ da Empresa</label>
+                <input type="text" class="form-control" name="cnpj" id="cnpj" value="" />
+            </div>
+
+            <div class="col-8">
+                <label for="faturamento">Faturamento da Empresa</label>
+                <input type="text" class="form-control" name="faturamento" id="faturamento" value="" />
+            </div>
+
+            <div class="col-8">
+                <label for="ramo">Ramo da Empresa</label>
+               <select class="form-control form-select" id="ramo" name="ramo">
+                    <option value="0" selected>Selecione</option>
+                    <option value="1">Produto</option>
+                    <option value="2">Serviços</option>
+               </select>
+            </div>
+        </div>
+
+
+    </form>
+</div>
