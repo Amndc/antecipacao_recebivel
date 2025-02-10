@@ -1,30 +1,35 @@
-﻿using antecipacao_recebivel.Models;
+﻿using antecipacao_recebivel.Data;
+using antecipacao_recebivel.Models;
 
 namespace antecipacao_recebivel.DataAccess
 {
     public class EmpresaRepo
     {
-        private readonly MeuDbContext _context;
+        private readonly DbContextRecebivel _DBrecebivel;
 
-        public EmpresaRepo(MeuDbContext context)
+
+        public EmpresaRepo(DbContextRecebivel DBrecebivel)
         {
-            _context = context;
+            _DBrecebivel = DBrecebivel;
         }
 
         public void Adicionar(Empresa empresa)
         {
-            _context.Empresas.Add(empresa);
-            _context.SaveChanges();
+            _DBrecebivel.Empresas.Add(empresa);
+            _DBrecebivel.SaveChanges();
         }
 
         public Empresa ObterPorCNPJ(string cnpj)
         {
-            return _context.Empresas.FirstOrDefault(e => e.CNPJ == cnpj);
+            //TODO 
+           //Mudar pra CNPJ
+            return _DBrecebivel.Empresas.FirstOrDefault(e => e.cnpj == cnpj);
         }
 
+        //valida se empresa ja existe - Mudar pro banco?
         public bool existsEmpresa (string cnpj)
         {
-            return _context.Empresas.Any(e => e.CNPJ == cnpj);
+            return _DBrecebivel.Empresas.Any(e => e.cnpj == cnpj);
         }
     }
 }

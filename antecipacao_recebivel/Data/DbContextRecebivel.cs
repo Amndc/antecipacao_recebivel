@@ -8,14 +8,11 @@ namespace antecipacao_recebivel.Data
         public DbContextRecebivel(DbContextOptions<DbContextRecebivel> options) : base(options) { }
 
        
-        public DbSet<Empresa> Enterprises { get; set; }
+        public DbSet<Empresa> Empresas { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-            // Configuração de chaves, índices, etc., se necessário
         }
-
-
     }
 }
