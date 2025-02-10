@@ -4,7 +4,8 @@
 
 <div class="text-start">
     <h1 class="display-6">Cadastro Empresa</h1>
-    <form method="post">  
+
+    <form method="post" id="MyForm" asp-action="CadastrarEmpresa" asp-controller="Empresa">
         <div class="col-12 row d-flex gap-3">
             <div class="col-8 ">
                  <label for="nome">Nome da Empresa</label>
@@ -28,8 +29,11 @@
                     <option value="2">Serviços</option>
                </select>
             </div>
+            <button type="submit">Salvar</button>
         </div>
 
 
     </form>
 </div>
+
+

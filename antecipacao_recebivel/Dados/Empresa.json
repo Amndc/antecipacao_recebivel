@@ -1,0 +1,32 @@
+﻿{
+  "empresas": [
+    {
+      "id": "1",
+      "cnpj": "12345678000190",
+      "nome": "Teste 02",
+      "faturamentoMensal": "15.000",
+      "ramo": "1"
+    },
+    {
+      "id": "1",
+      "cnpj": "12345678000190",
+      "nome": "Teste 02",
+      "faturamentoMensal": "15.000",
+      "ramo": "1"
+    },
+    {
+      "id": "1",
+      "cnpj": "12345678000190",
+      "nome": "Teste 02",
+      "faturamentoMensal": "15.000",
+      "ramo": "1"
+    },
+    {
+      "id": "1",
+      "cnpj": "12345678000190",
+      "nome": "Teste 02",
+      "faturamentoMensal": "15.000",
+      "ramo": "1"
+    }
+  ]
+}
