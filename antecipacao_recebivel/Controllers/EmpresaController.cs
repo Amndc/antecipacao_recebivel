@@ -29,10 +29,10 @@ namespace antecipacao_recebivel.Controllers
 
             // Ler o conteúdo do arquivo            
             var json = System.IO.File.ReadAllText(caminhoArquivo);
-            foreach (Char line in json.empresas)
-            {
-                var adadas = line;
-            }
+            //foreach (Char line in json.empresas)
+            //{
+            //    var adadas = line;
+            //}
 
             // Deserializar o JSON para um objeto          
             Empresa empres2 = JsonConvert.DeserializeObject<Empresa>(json);
