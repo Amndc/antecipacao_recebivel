@@ -14,11 +14,11 @@ namespace antecipacao_recebivel.Rules
         }
         public Resultado CadEmpresa(Empresa empresa)
         {
-            _empresaRepo.existeEmpresa(empresa.cnpj);
+            if(_empresaRepo.existeEmpresa(empresa.cnpj))
                 return new Resultado(false, "Empresa já cadastrada!");
 
-            //_empresaRepo.Adicionar(empresa);
-            //return new Resultado(true, "Empresa cadastrada com sucesso!");
+            _empresaRepo.Adicionar(empresa);
+            return new Resultado(true, "Empresa cadastrada com sucesso!");
         }
 
 

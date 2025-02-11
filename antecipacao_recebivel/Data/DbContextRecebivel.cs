@@ -6,18 +6,19 @@ namespace antecipacao_recebivel.Data
     public class DbContextRecebivel : DbContext
     {
 
+
+        public DbContextRecebivel(DbContextOptions<DbContextRecebivel> options) 
+            : base(options) { }
+
         public DbSet<Empresa> Empresas { get; set; }
 
-        public DbContextRecebivel(DbContextOptions<DbContextRecebivel> options) : base(options) { }  
-        
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            optionsBuilder.UseInMemoryDatabase("TestDb");
-        }
 
-        //protected override void OnModelCreating(ModelBuilder modelBuilder)
-        //{
-        //    base.OnModelCreating(modelBuilder);
-        //}
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Empresa>()
+                .Property(e => e.faturamento)
+                .HasColumnType("decimal(18,2)"); //  precisão e escala 
+        }
+        
     }
 }

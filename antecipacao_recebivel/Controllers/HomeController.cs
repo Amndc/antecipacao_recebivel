@@ -18,7 +18,7 @@ namespace antecipacao_recebivel.Controllers
             //TempData["Mensagem"] = "Olá, essa é uma mensagem temporária!";
 
             //return Redirect("https://localhost:7005/swagger");
-            return View();
+           return View();
         }
 
         public IActionResult Privacy()
