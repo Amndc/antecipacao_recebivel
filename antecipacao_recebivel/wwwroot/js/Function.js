@@ -60,7 +60,7 @@ function insertNf() {
 }
 
 
-function modelCadNf(tipo) {
+function modelCadNf(tipo, dados) {
     let idtemp = Math.floor(Math.random() * 1000) +1
     let saida;
     switch (tipo) {
@@ -68,13 +68,13 @@ function modelCadNf(tipo) {
             saida = `<div class="border p-3 mt-1 form-group" id="${idtemp}">
                         <div class="col-12 d-flex">
                             <div class="col-3 d-flex">                       
-                                <label class="mt-2 ms-2 fw-bold">Número</label><input class="ms-1 form-control inputsCustom inputNum" id="numero"></input>
+                                <label class="mt-2 ms-2 fw-bold">Número</label><input class="ms-1 form-control inputsCustom" id="numero"></input>
                             </div>
                             <div class="col-4 d-flex">
-                          <label class="mt-2 ms-1 fs-6">Valor:</label><input class="ms-1 form-control inputsCustom inputVal" id="valor" ></input>
+                          <label class="mt-2 ms-1 fs-6">Valor:</label><input class="ms-1 form-control inputsCustom" id="valor" ></input>
                             </div>
                             <div class="col-3 d-flex">
-                            <label class="mt-2 ms-1 fs-6">Vencimento:</label><input class="ms-1 form-control inputsCustom inputVen" id="vencimento"></input>
+                            <label class="mt-2 ms-1 fs-6">Vencimento:</label><input class="ms-1 form-control inputsCustom" id="vencimento"></input>
                             </div>
                     
                             <div class="col-2 d-flex ms-auto justify-content-end">
@@ -97,7 +97,7 @@ function modelCadNf(tipo) {
                                           </g>
                                       </svg>
                                 </button>
-                                <button class="btn" onclick="addNF(${idtemp})">
+                                <button class="btn" onclick="getDadosNF(${idtemp})">
                                    <svg width="25px" height="25px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                        <path d="M4 12.6111L8.92308 17.5L20 6.5" stroke="#198754" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                                    </svg>
@@ -105,6 +105,37 @@ function modelCadNf(tipo) {
                             </div>
                         </div>
                     </div>`
+            break;
+
+        case "adiciona":
+            saida = ` <div class="border  p-3  mt-1 form-group" id="${dados.numero}">
+                        <div class="col-12 d-flex">
+                            <div class="col-3 d-flex">
+                             <input type="checkbox" class="form-check rounded rounded-5 mt-1 nfSelect" id="${dados.numero}" />
+                             <label class="mt-2 ms-2 fw-bold">${dados.numero}</label>
+                         </div>
+                            <div class="col-4 d-flex">
+                             <label class="mt-2 ms-1 fs-6"><b class="mt-2 ms-2">Valor: </b>${dados.valor}</label>
+                         </div>
+                            <div class="col-4 d-flex">
+                             <label class="mt-2 ms-1 fs-6"><b class="mt-2 ms-2">Vencimento: </b>${dados.vencimento}</label>
+                         </div>
+                        
+                            <div class="col-1 d-flex ms-auto justify-content-end">
+                             <button class="btn">
+                                 <svg width="20px" height="20px" viewBox="-3 0 32 32" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns">
+                                                                  <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" sketch:type="MSPage">
+                                         <g id="Icon-Set-Filled" sketch:type="MSLayerGroup" transform="translate(-261.000000, -205.000000)" fill="#000000">
+                                             <path d="M268,220 C268,219.448 268.448,219 269,219 C269.552,219 270,219.448 270,220 L270,232 C270,232.553 269.552,233 269,233 C268.448,233 268,232.553 268,232 L268,220 L268,220 Z M273,220 C273,219.448 273.448,219 274,219 C274.552,219 275,219.448 275,220 L275,232 C275,232.553 274.552,233 274,233 C273.448,233 273,232.553 273,232 L273,220 L273,220 Z M278,220 C278,219.448 278.448,219 279,219 C279.552,219 280,219.448 280,220 L280,232 C280,232.553 279.552,233 279,233 C278.448,233 278,232.553 278,232 L278,220 L278,220 Z M263,233 C263,235.209 264.791,237 267,237 L281,237 C283.209,237 285,235.209 285,233 L285,217 L263,217 L263,233 L263,233 Z M277,209 L271,209 L271,208 C271,207.447 271.448,207 272,207 L276,207 C276.552,207 277,207.447 277,208 L277,209 L277,209 Z M285,209 L279,209 L279,207 C279,205.896 278.104,205 277,205 L271,205 C269.896,205 269,205.896 269,207 L269,209 L263,209 C261.896,209 261,209.896 261,211 L261,213 C261,214.104 261.895,214.999 262.999,215 L285.002,215 C286.105,214.999 287,214.104 287,213 L287,211 C287,209.896 286.104,209 285,209 L285,209 Z" id="trash" sketch:type="MSShapeGroup">
+                      
+                                             </path>
+                                         </g>
+                                     </g>
+                                 </svg>
+                             </button>                       
+                         </div>
+                        </div>
+                      </div>`
             break;
     }
 
@@ -116,6 +147,7 @@ function getDadosNF(idcard) {
     let cardNota = document.getElementById(idcard)
     let inputsCard = cardNota.querySelectorAll("input");
     let valoresInput = {}
+    let camposVazios = []
 
     inputsCard.forEach((elemento, index) => {
         elemento.classList.remove("is-invalid")
@@ -130,25 +162,32 @@ function getDadosNF(idcard) {
     })
 
     addNF(valoresInput)
+    discard(idcard)
 }
 
 function addNF(notaFiscal) {
-    fetch('/cadNotaFiscal', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: json
-    })
-        .then(response => response.json())
-        .then(data => {
-            alert(data.mensagem)
-            if (data.sucesso == false) {              
-            }
-        })
-        .catch(error => {
-            alert(`Erro ao Realizar Operação ${error}`)
-        });
+  let container = document.getElementsByClassName('container-Notas')
+
+  let teste =  modelCadNf('adiciona', notaFiscal)
+
+  container[0].innerHTML = container[0].innerHTML + teste
+
+    //fetch('/cadNotaFiscal', {
+    //    method: 'POST',
+    //    headers: {
+    //        'Content-Type': 'application/json'
+    //    },
+    //    body: json
+    //})
+    //    .then(response => response.json())
+    //    .then(data => {
+    //        alert(data.mensagem)
+    //        if (data.sucesso == false) {              
+    //        }
+    //    })
+    //    .catch(error => {
+    //        alert(`Erro ao Realizar Operação ${error}`)
+    //    });
 }
 
 
