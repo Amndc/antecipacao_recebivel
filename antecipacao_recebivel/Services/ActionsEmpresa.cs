@@ -12,7 +12,7 @@ namespace antecipacao_recebivel.Rules
         {
             _empresaRepo = empresaRepo;
         }
-        public Resultado CadEmpresa(Empresa empresa)
+        public Resultado validaEmpresa(Empresa empresa)
         {
             if(_empresaRepo.existeEmpresa(empresa.cnpj))
                 return new Resultado(false, "Empresa já cadastrada!");

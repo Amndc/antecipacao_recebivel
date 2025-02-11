@@ -11,6 +11,7 @@ namespace antecipacao_recebivel.Data
             : base(options) { }
 
         public DbSet<Empresa> Empresas { get; set; }
+        public DbSet<NotasFiscais> NotasFiscais { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

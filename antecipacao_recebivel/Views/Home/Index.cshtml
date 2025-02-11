@@ -2,38 +2,125 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-start">
-    <h1 class="display-6">Cadastro Empresa</h1>
+<div class="p-3 ms-5">
+    <h1 class="display-6 ms-2">Cadastro Empresa</h1>
 
-    <form method="post" id="Form-CadEmpresa">
-        <div class="col-12 row d-flex gap-3">
-            <div class="col-8 ">
-                 <label for="nome">Nome da Empresa</label>
-                <input type="text" class="form-control" name="nome" id="nome" value="" />
-            </div>
-            <div class="col-8">
-                <label for="cnpj">CNPJ da Empresa</label>
-                <input type="text" class="form-control" name="cnpj" id="cnpj" value="" />
-            </div>
+    <div class="row col-12 d-flex">
 
-            <div class="col-8">
-                <label for="faturamento">Faturamento da Empresa</label>
-                <input type="text" class="form-control" name="faturamento" id="faturamento" value="" />
-            </div>
+        <div class="col-6 p-2" hidden>
+           <form method="post" id="Form-CadEmpresa">        
+               <div class="col-12 row ms-1">
+                    <div class="col-12 mt-3">
+                        <label for="nome">Nome da Empresa</label>
+                       <input type="text" class="form-control" name="nome" id="nome"  required />
+                   </div>
+                    <div class="col-12 mt-3">
+                       <label for="cnpj">CNPJ da Empresa</label>
+                       <input type="text" class="form-control" title="Preencha O CNPJ somente com numeros" name="cnpj" id="cnpj" data-mascara="cnpj" maxlength="18" placeholder="01234567890123" required onclick="aplyMaskCNPJ(this)" />
+                   </div>
 
-            <div class="col-8">
-                <label for="ramo">Ramo da Empresa</label>
-               <select class="form-control form-select" id="ramo" name="ramo">
-                    <option value="0" selected>Selecione</option>
-                    <option value="1">Produto</option>
-                    <option value="2">Serviços</option>
-               </select>
-            </div>
-            <button type="submit">Salvar</button>
+                    <div class="col-12 mt-3">
+                       <label for="faturamento">Faturamento da Empresa</label>
+                       <input type="text" class="form-control" name="faturamento" id="faturamento" required />
+                   </div>
+
+                    <div class="col-12 mt-3">
+                       <label for="ramo">Ramo da Empresa</label>
+                       <select class="form-control form-select" id="ramo" name="ramo" required>
+                           <option value="0" selected>Selecione</option>
+                           <option value=1>Produto</option>
+                           <option value=2>Serviços</option>
+                      </select>
+                   </div>
+           
+                   <div class="col-8 mt-3">
+                      <button type="submit" class="btn btn-dark">Salvar</button>
+                   </div>
+               </div>
+           </form>
         </div>
 
+        <div class="col-7 card ms-4 p-3 heightCustom">
+            <h3 class=" ms-2 text-center border-bottom border-2 border-black">Notas Fiscais</h3>
+            <div class="heightCustomOver container-Notas">
+                 <div class="border  p-3">
+                   <div class="col-12 d-flex">
+                       <div class="col-3 d-flex">
+                        <input type="checkbox" class="form-check rounded rounded-5 mt-1 nfSelect" />
+                        <label class="mt-2 ms-2 fw-bold">Número</label>
+                    </div>
+                       <div class="col-4 d-flex">
+                        <label class="mt-2 ms-1 fs-6"><b class="mt-2 ms-2">Valor: </b>12.000</label>
+                    </div>
+                       <div class="col-4 d-flex">
+                        <label class="mt-2 ms-1 fs-6"><b class="mt-2 ms-2">Vencimento: </b>24/40/40</label>
+                    </div>
+                   
+                       <div class="col-1 d-flex ms-auto justify-content-end">
+                        <button class="btn">
+                            <svg width="20px" height="20px" viewBox="-3 0 32 32" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns">
+                                                             <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" sketch:type="MSPage">
+                                    <g id="Icon-Set-Filled" sketch:type="MSLayerGroup" transform="translate(-261.000000, -205.000000)" fill="#000000">
+                                        <path d="M268,220 C268,219.448 268.448,219 269,219 C269.552,219 270,219.448 270,220 L270,232 C270,232.553 269.552,233 269,233 C268.448,233 268,232.553 268,232 L268,220 L268,220 Z M273,220 C273,219.448 273.448,219 274,219 C274.552,219 275,219.448 275,220 L275,232 C275,232.553 274.552,233 274,233 C273.448,233 273,232.553 273,232 L273,220 L273,220 Z M278,220 C278,219.448 278.448,219 279,219 C279.552,219 280,219.448 280,220 L280,232 C280,232.553 279.552,233 279,233 C278.448,233 278,232.553 278,232 L278,220 L278,220 Z M263,233 C263,235.209 264.791,237 267,237 L281,237 C283.209,237 285,235.209 285,233 L285,217 L263,217 L263,233 L263,233 Z M277,209 L271,209 L271,208 C271,207.447 271.448,207 272,207 L276,207 C276.552,207 277,207.447 277,208 L277,209 L277,209 Z M285,209 L279,209 L279,207 C279,205.896 278.104,205 277,205 L271,205 C269.896,205 269,205.896 269,207 L269,209 L263,209 C261.896,209 261,209.896 261,211 L261,213 C261,214.104 261.895,214.999 262.999,215 L285.002,215 C286.105,214.999 287,214.104 287,213 L287,211 C287,209.896 286.104,209 285,209 L285,209 Z" id="trash" sketch:type="MSShapeGroup">
 
-    </form>
+                                        </path>
+                                    </g>
+                                </g>
+                            </svg>
+                        </button>                       
+                    </div>
+                   </div>
+                 </div>
+
+            </div>
+
+            <div class="d-flex justify-content-start mt-3">
+               
+            </div>
+               
+
+              <div class="d-flex justify-content-between mt-3">
+                <button class="btn btn-dark" onclick="insertNf()">
+                    <i>
+                        <svg width="15px" height="15px" viewBox="0 0 32 32"  style="margin-top:-4px; margin-right:6px;" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns">
+
+                            <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" sketch:type="MSPage">
+                                <g id="Icon-Set-Filled" sketch:type="MSLayerGroup" transform="translate(-102.000000, -1037.000000)" fill="#fff">
+                                    <path d="M124,1054 L119,1054 L119,1059 C119,1059.55 118.552,1060 118,1060 C117.448,1060 117,1059.55 117,1059 L117,1054 L112,1054 C111.448,1054 111,1053.55 111,1053 C111,1052.45 111.448,1052 112,1052 L117,1052 L117,1047 C117,1046.45 117.448,1046 118,1046 C118.552,1046 119,1046.45 119,1047 L119,1052 L124,1052 C124.552,1052 125,1052.45 125,1053 C125,1053.55 124.552,1054 124,1054 L124,1054 Z M130,1037 L106,1037 C103.791,1037 102,1038.79 102,1041 L102,1065 C102,1067.21 103.791,1069 106,1069 L130,1069 C132.209,1069 134,1067.21 134,1065 L134,1041 C134,1038.79 132.209,1037 130,1037 L130,1037 Z" id="plus-square" sketch:type="MSShapeGroup">
+
+                                    </path>
+                                </g>
+                            </g>
+                        </svg>
+                    </i> Nota Fiscal
+                </button>
+
+                <button class="btn btn-dark">
+                    <i class="alinhamento">
+                        <svg width="28px" height="28px" style="margin-top:-2px; margin-right:5px;" viewBox="0 0 24 24" fill="#fff" xmlns="http://www.w3.org/2000/svg">2
+                            <path fill-rule="evenodd" clip-rule="evenodd" d="M3.04047 2.29242C2.6497 2.15503 2.22155 2.36044 2.08416 2.7512C1.94678 3.14197 2.15218 3.57012 2.54295 3.7075L2.80416 3.79934C3.47177 4.03406 3.91052 4.18961 4.23336 4.34802C4.53659 4.4968 4.67026 4.61723 4.75832 4.74609C4.84858 4.87818 4.91828 5.0596 4.95761 5.42295C4.99877 5.80316 4.99979 6.29837 4.99979 7.03832L4.99979 9.64C4.99979 12.5816 5.06302 13.5523 5.92943 14.4662C6.79583 15.38 8.19028 15.38 10.9792 15.38H16.2821C17.8431 15.38 18.6236 15.38 19.1753 14.9304C19.727 14.4808 19.8846 13.7164 20.1997 12.1875L20.6995 9.76275C21.0466 8.02369 21.2202 7.15417 20.7762 6.57708C20.3323 6 18.8155 6 17.1305 6H6.49233C6.48564 5.72967 6.47295 5.48373 6.4489 5.26153C6.39517 4.76515 6.27875 4.31243 5.99677 3.89979C5.71259 3.48393 5.33474 3.21759 4.89411 3.00139C4.48203 2.79919 3.95839 2.61511 3.34187 2.39838L3.04047 2.29242ZM13 8.25C13.4142 8.25 13.75 8.58579 13.75 9V10.25H15C15.4142 10.25 15.75 10.5858 15.75 11C15.75 11.4142 15.4142 11.75 15 11.75H13.75V13C13.75 13.4142 13.4142 13.75 13 13.75C12.5858 13.75 12.25 13.4142 12.25 13V11.75H11C10.5858 11.75 10.25 11.4142 10.25 11C10.25 10.5858 10.5858 10.25 11 10.25H12.25V9C12.25 8.58579 12.5858 8.25 13 8.25Z" fill="#fff" />
+                            <path d="M7.5 18C8.32843 18 9 18.6716 9 19.5C9 20.3284 8.32843 21 7.5 21C6.67157 21 6 20.3284 6 19.5C6 18.6716 6.67157 18 7.5 18Z" fill="#fff" />
+                            <path d="M16.5 18.0001C17.3284 18.0001 18 18.6716 18 19.5001C18 20.3285 17.3284 21.0001 16.5 21.0001C15.6716 21.0001 15 20.3285 15 19.5001C15 18.6716 15.6716 18.0001 16.5 18.0001Z" fill="#fff" />
+                        </svg>
+                    </i>Adicionar ao Carrinho
+                </button>
+              </div>
+        </div>
+        <div class="col-4 ms-5 card">
+            <svg width="40px" height="40px" style="margin-top:12px;" viewBox="0 0 32 32" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns">
+
+                <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" sketch:type="MSPage">
+                    <g id="Icon-Set-Filled" sketch:type="MSLayerGroup" transform="translate(-518.000000, -725.000000)" fill="#000000">
+                        <path d="M528,751 C529.104,751 530,751.896 530,753 C530,754.104 529.104,755 528,755 C526.896,755 526,754.104 526,753 C526,751.896 526.896,751 528,751 L528,751 Z M524,753 C524,755.209 525.791,757 528,757 C530.209,757 532,755.209 532,753 C532,750.791 530.209,749 528,749 C525.791,749 524,750.791 524,753 L524,753 Z M526,747 C524.896,747 524,746.104 524,745 C524,745 547,743 546.972,743.097 C547.482,741.2 549.979,730.223 550,730 C550.054,729.45 549.553,729 549,729 L524,729 L524,727 L525,727 C525.553,727 526,726.553 526,726 C526,725.448 525.553,725 525,725 L519,725 C518.447,725 518,725.448 518,726 C518,726.553 518.447,727 519,727 L522,727 L522,745 C522,747.209 523.791,749 526,749 L549,749 C549.031,749 549,748.009 549,747 L526,747 L526,747 Z M540,751 C541.104,751 542,751.896 542,753 C542,754.104 541.104,755 540,755 C538.896,755 538,754.104 538,753 C538,751.896 538.896,751 540,751 L540,751 Z M536,753 C536,755.209 537.791,757 540,757 C542.209,757 544,755.209 544,753 C544,750.791 542.209,749 540,749 C537.791,749 536,750.791 536,753 L536,753 Z" id="cart-2" sketch:type="MSShapeGroup">
+
+                        </path>
+                    </g>
+                </g>
+            </svg>
+        </div>
+
+    </div>
+   
 </div>
 
 

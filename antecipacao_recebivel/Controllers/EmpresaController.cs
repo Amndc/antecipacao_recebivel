@@ -18,14 +18,24 @@ namespace antecipacao_recebivel.Controllers
             _actionsEmpresa = actionsEmpresa;        
         }
 
-        [Route("empresa")]       
+        [Route("cadempresa")]       
         [HttpPost]
-        public IActionResult CadastrarEmpresa([FromBody] Empresa empresa)
+        public IActionResult cadastrarEmpresa([FromBody] Empresa empresa)
         {
 
-            var resultado = _actionsEmpresa.CadEmpresa(empresa);
+            var resultado = _actionsEmpresa.validaEmpresa(empresa);
 
-             return Ok(resultado);            
+            return Ok(resultado);            
+        }
+
+        [Route("cadNotaFiscal")]
+        [HttpPost]
+        public IActionResult cadastrarNotaFiscal([FromBody] Empresa empresa)
+        {
+
+            var resultado = _actionsEmpresa.validaEmpresa(empresa);
+
+            return Ok(resultado);
         }
     }
 }

@@ -29,3 +29,31 @@ body {
     margin-left:-12px;
 }
 
+.heightCustom{
+    height:600px;    
+}
+
+.heightCustomOver {
+    max-height: 550px;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+.fontColorCustom {
+    color: #adb5bd;
+}
+
+.inputsCustom{
+    margin-top:5px;
+    height:30px;
+    
+}
+.inputNum {
+    width: 165px;
+}
+.inputVal {
+    width: 255px;
+}
+.inputVen {
+    width: 255px;
+}

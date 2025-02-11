@@ -745,9 +745,9 @@ progress {
   --bs-gutter-y: 0;
   width: 100%;
   padding-right: calc(var(--bs-gutter-x) * 0.5);
-  padding-left: calc(var(--bs-gutter-x) * 0.5);
-  margin-right: auto;
-  margin-left: auto;
+  padding-left:  calc(var(--bs-gutter-x) * 0.5);
+  margin-right: 75px;
+  margin-left: 75px;
 }
 
 @media (min-width: 576px) {

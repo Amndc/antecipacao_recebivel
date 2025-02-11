@@ -1,28 +1,26 @@
 ﻿using antecipacao_recebivel.Data;
 using antecipacao_recebivel.Models;
-using Newtonsoft.Json;
 
 namespace antecipacao_recebivel.DataAccess
 {
-    public class EmpresaRepo
+    public class NfRepository
     {
         private readonly DbContextRecebivel _DBrecebivel;
 
-
-        public EmpresaRepo(DbContextRecebivel DBrecebivel)
+        public NfRepository(DbContextRecebivel DBrecebivel)
         {
             _DBrecebivel = DBrecebivel;
         }
 
-        public void Adicionar(Empresa empresa)
+        public void adicionarNF(NotasFiscais notafiscal)
         {
-            _DBrecebivel.Empresas.Add(empresa);
+            _DBrecebivel.NotasFiscais.Add(notafiscal);
             _DBrecebivel.SaveChanges();
         }
-      
-        public bool existeEmpresa (string cnpj)
+
+        public bool existeNF(string numero)
         {
-            if (_DBrecebivel.Empresas.Any(e => e.cnpj == cnpj))
+            if (_DBrecebivel.NotasFiscais.Any(e => e.numero == numero))
                 return true;
 
             return false;
