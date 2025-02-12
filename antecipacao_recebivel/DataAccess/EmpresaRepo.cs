@@ -21,21 +21,42 @@ namespace antecipacao_recebivel.DataAccess
             _DBrecebivel.SaveChanges();
         }
       
-        public bool existeEmpresa (string cnpj)
+        public Resultado existeEmpresa (Empresa empresa)
         {
-            if (_DBrecebivel.Empresas.Any(e => e.cnpj == cnpj))
-                return true;
+            var empresaExistente = GetEmpresaPorCnpj(empresa.cnpj);
 
-            return false;
+
+            if (empresaExistente != null)
+            {
+                if (!string.Equals(empresaExistente.nome, empresa.nome, StringComparison.OrdinalIgnoreCase))
+                {            
+                    return new Resultado(false, "CNPJ já cadastrado, mas o nome informado não corresponde ao registro existente.");
+                }
+                else
+                {                   
+                    return new Resultado(false, "CNPJ já cadastrado. O que deseja fazer?");
+                }
+
+            }
+
+            adicionarEmpresa(empresa);
+            return new Resultado(true, "Empresa cadastrada com sucesso!");           
+        }
+        public enum EmpresaValidationStatus
+        {
+            EmpresaNaoEncontrada,      
+            EmpresaValida,             
+            EmpresaInvalidaPorDados    
         }
 
-        public string GetNomeEmpresaPorCnpj(string cnpj)
-        {
-            // Busca a empresa pelo CNPJ no banco de dados
-            var empresa = _DBrecebivel.Empresas.FirstOrDefault(e => e.cnpj == cnpj);
+        
 
-            // Se a empresa for encontrada, retorna o nome, caso contrário, retorna uma string vazia ou uma mensagem de erro
-            return empresa?.nome ?? "Empresa não encontrada";
+        public Empresa GetEmpresaPorCnpj(string cnpj)
+        {
+            var empresa = _DBrecebivel.Empresas.FirstOrDefault(e => e.cnpj == cnpj);
+            
+
+            return empresa ?? throw new Exception("Empresa não encontrada");
         }
     }
 }

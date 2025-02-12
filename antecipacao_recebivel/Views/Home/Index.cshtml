@@ -3,7 +3,7 @@
 }
 
 <div class="p-3 ms-5">
-    <h1 class="display-6 ms-2" id="titulo">Cadastro Empresa</h1>
+    <h1 class="display-6 ms-2" id="titulo">Preencha os Dados Empresa</h1>
 
     <div class="row col-12 d-flex">
 
@@ -11,13 +11,14 @@
            <form method="post" id="Form-CadEmpresa">        
                <div class="col-12 row ms-1">
                     <div class="col-12 mt-3">
+                        <label for="cnpj">CNPJ da Empresa</label>
+                        <input type="text" class="form-control" title="Preencha O CNPJ somente com numeros" name="cnpj" id="cnpj" data-mascara="cnpj" maxlength="18" placeholder="0" required onclick="applyMaskCNPJ(this)" />
+                    </div>
+                    <div class="col-12 mt-3">
                         <label for="nome">Nome da Empresa</label>
                         <input type="text" class="form-control" name="nome" id="nome" placeholder="Nome Empresa" required />
                    </div>
-                    <div class="col-12 mt-3">
-                       <label for="cnpj">CNPJ da Empresa</label>
-                        <input type="text" class="form-control" title="Preencha O CNPJ somente com numeros" name="cnpj" id="cnpj" data-mascara="cnpj" maxlength="18" placeholder="0" required onclick="applyMaskCNPJ(this)" />
-                   </div>
+                   
 
                     <div class="col-12 mt-3">
                        <label for="faturamento">Faturamento da Empresa</label>
@@ -34,7 +35,7 @@
                    </div>
            
                    <div class="col-8 mt-3">
-                      <button type="submit" class="btn btn-dark">Salvar</button>
+                      <button type="submit" class="btn btn-dark">Continuar</button>
                    </div>
                </div>
            </form>

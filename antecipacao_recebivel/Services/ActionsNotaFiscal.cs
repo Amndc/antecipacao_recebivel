@@ -33,7 +33,5 @@ namespace antecipacao_recebivel.Services
             return new Resultado(true, JsonSerializer.Serialize(notas));
             
         }
-
-       
     }
 }

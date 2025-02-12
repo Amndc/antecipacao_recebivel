@@ -5,6 +5,7 @@
         public int id { get; set; }
         public decimal faixaMin { get; set; }
         public decimal faixaMax { get; set; }
-        public decimal porcentagem { get; set; }
+        public int porcentagem { get; set; }
+        public int ramo { get; set; }
     }
 }

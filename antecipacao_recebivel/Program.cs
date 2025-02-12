@@ -14,6 +14,7 @@ builder.Services.AddAuthorization();
 builder.Services.AddScoped<ActionsEmpresa>();
 builder.Services.AddScoped<EmpresaRepo>();
 builder.Services.AddScoped<ActionsNotaFiscal>();
+
 builder.Services.AddScoped<NfRepository>();
 builder.Services.AddControllers();
 

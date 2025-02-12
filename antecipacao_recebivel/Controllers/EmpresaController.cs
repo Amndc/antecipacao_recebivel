@@ -16,14 +16,14 @@ namespace antecipacao_recebivel.Controllers
     [Route("api/empresa")]
     public class EmpresaController : ControllerBase
     {
-        private readonly ActionsEmpresa _actionsEmpresa;
+   
         private readonly ActionsNotaFiscal _actionsNotaFiscal;
         private readonly NfRepository _nfRepository;
         private readonly EmpresaRepo _empresaRepo;
 
-        public EmpresaController(ActionsEmpresa actionsEmpresa, ActionsNotaFiscal actionsNotaFiscal, NfRepository nfRepository, EmpresaRepo empresaRepo)
+        public EmpresaController( ActionsNotaFiscal actionsNotaFiscal, NfRepository nfRepository, EmpresaRepo empresaRepo)
         {
-            _actionsEmpresa = actionsEmpresa;
+            
             _actionsNotaFiscal = actionsNotaFiscal;
             _nfRepository = nfRepository;
             _empresaRepo = empresaRepo;
@@ -34,12 +34,12 @@ namespace antecipacao_recebivel.Controllers
         public IActionResult cadastrarEmpresa([FromBody] Empresa empresa)
         {
 
-            var resultado = _actionsEmpresa.validaEmpresaExiste(empresa);
+            var resultado = _empresaRepo.existeEmpresa(empresa);
 
             return Ok(resultado);
 
         }      
-      
+
         [HttpPost("{cnpj}/cadNotaFiscal")]
         public IActionResult cadastrarNotaFiscal([FromBody] NotasFiscais notasFiscais, string cnpj)
         {
@@ -61,7 +61,6 @@ namespace antecipacao_recebivel.Controllers
         {
 
             DateTime dataAtual = DateTime.Now;
-            decimal limiteTotal = 0m;
             decimal totalLiquido = 0m;
             decimal totalBruto = 0m;
             List<object> notasFiscais = new List<object>();
@@ -70,7 +69,6 @@ namespace antecipacao_recebivel.Controllers
             {
                 int prazo = (nota.datavencimento - dataAtual).Days;
 
-
                 if (prazo < 0)
                 {
                     return BadRequest(new { sucesso = false, mensagem = "A data de vencimento não pode ser anterior à data atual." });
@@ -78,32 +76,27 @@ namespace antecipacao_recebivel.Controllers
 
                 decimal valorLiquido = _nfRepository.CalculaDesagio(nota.valor, nota.datavencimento, dataAtual);
 
-
-
-
                 notasFiscais.Add(new
                 {
                     numero = nota.numero,
                     valor_bruto = nota.valor,
-                    valor_liquido = valorLiquido
+                    valor_liquido = Math.Round(valorLiquido, 2)
                 });
 
-                // Acumula os totais
                 totalLiquido += valorLiquido;
                 totalBruto += nota.valor;
-
-                
-
             }
-            string nomeEmpresa = _empresaRepo.GetNomeEmpresaPorCnpj(cnpj);
-            // Retorna o valor total do limite calculado
+
+            Empresa dataempresa = _empresaRepo.GetEmpresaPorCnpj(cnpj);
+            decimal limiteAntecipacao = _nfRepository.CalcularLimiteAntecipacao(dataempresa.faturamento, dataempresa.ramo);
+
             return Ok(new
             {
-                empresa = nomeEmpresa,
+                empresa = dataempresa.nome,
                 cnpj = cnpj,
-                limite = totalLiquido, // Esse é o limite calculado
+                limite = Math.Round(limiteAntecipacao, 0),
                 notas_fiscais = notasFiscais,
-                total_liquido = totalLiquido,
+                total_liquido = Math.Round(totalLiquido, 0),
                 total_bruto = totalBruto
             });
         }
