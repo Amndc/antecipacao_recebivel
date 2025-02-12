@@ -38,7 +38,17 @@ namespace antecipacao_recebivel.Controllers
 
             return Ok(resultado);
 
-        }      
+        }
+
+        [HttpPost("updateEmpresa")]
+        public IActionResult updateEmpresa([FromBody] Empresa empresa)
+        {
+
+            var resultado = _empresaRepo.AtualizarEmpresa(empresa);
+
+            return Ok(resultado);
+
+        }
 
         [HttpPost("{cnpj}/cadNotaFiscal")]
         public IActionResult cadastrarNotaFiscal([FromBody] NotasFiscais notasFiscais, string cnpj)
@@ -90,15 +100,25 @@ namespace antecipacao_recebivel.Controllers
             Empresa dataempresa = _empresaRepo.GetEmpresaPorCnpj(cnpj);
             decimal limiteAntecipacao = _nfRepository.CalcularLimiteAntecipacao(dataempresa.faturamento, dataempresa.ramo);
 
-            return Ok(new
+            var valorLimiteCalc = Math.Round(limiteAntecipacao, 0);
+            if (valorLimiteCalc > totalBruto)
             {
-                empresa = dataempresa.nome,
-                cnpj = cnpj,
-                limite = Math.Round(limiteAntecipacao, 0),
-                notas_fiscais = notasFiscais,
-                total_liquido = Math.Round(totalLiquido, 0),
-                total_bruto = totalBruto
-            });
+                return Ok(new
+                {
+                    empresa = dataempresa.nome,
+                    cnpj = cnpj,
+                    limite = Math.Round(limiteAntecipacao, 0),
+                    notas_fiscais = notasFiscais,
+                    total_liquido = Math.Round(totalLiquido, 0),
+                    total_bruto = totalBruto
+                });
+            }
+            else
+            {
+                return Ok(new Resultado(false, "Valor Total Maior que o Crédito Disponivel para a Empresa"));
+                
+            }
+            
         }
     }
 }

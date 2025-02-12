@@ -3,13 +3,13 @@
 }
 
 <div class="p-3 ms-5">
-    <h1 class="display-6 ms-2" id="titulo">Preencha os Dados Empresa</h1>
+    <h3 class=" Form-Center" id="titulo">Preencha os Dados Empresa</h3>
 
     <div class="row col-12 d-flex">
 
-        <div class="col-6 p-2" >
+        <div class="col-6 p-2 Form-Center">
            <form method="post" id="Form-CadEmpresa">        
-               <div class="col-12 row ms-1">
+               <div class="col-12 row ms-1 gap-3">
                     <div class="col-12 mt-3">
                         <label for="cnpj">CNPJ da Empresa</label>
                         <input type="text" class="form-control" title="Preencha O CNPJ somente com numeros" name="cnpj" id="cnpj" data-mascara="cnpj" maxlength="18" placeholder="0" required onclick="applyMaskCNPJ(this)" />
@@ -22,8 +22,8 @@
 
                     <div class="col-12 mt-3">
                        <label for="faturamento">Faturamento da Empresa</label>
-                       <input type="text" class="form-control" name="faturamento" id="faturamento" required placeholder="Valor do Faturamento"/>
-                   </div>
+                        <input type="text" class="form-control" name="faturamento" id="faturamento" required placeholder="Valor do Faturamento" onkeyup="formatarMoeda(this)" />
+                    </div>
 
                     <div class="col-12 mt-3">
                        <label for="ramo">Ramo da Empresa</label>
@@ -39,18 +39,18 @@
                    </div>
                </div>
            </form>
-        </div>
+        </div> 
+        
 
         <div class="col-7 card ms-4 p-3 heightCustom" id="notasFiscais" hidden>
             <h3 class=" ms-2 text-center border-bottom border-2 border-black">Notas Fiscais</h3>
-            <div class="heightCustomOver container-Notas">                
+            <div class="heightCustomOver container-Notas">
+            </div>
 
-            </div>        
-
-              <div class="d-flex justify-content-between mt-3">
+            <div class="d-flex justify-content-between mt-3">
                 <button class="btn btn-dark" onclick="insertNf()">
                     <i>
-                        <svg width="15px" height="15px" viewBox="0 0 32 32"  style="margin-top:-4px; margin-right:6px;" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns">
+                        <svg width="15px" height="15px" viewBox="0 0 32 32" style="margin-top:-4px; margin-right:6px;" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns">
 
                             <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" sketch:type="MSPage">
                                 <g id="Icon-Set-Filled" sketch:type="MSLayerGroup" transform="translate(-102.000000, -1037.000000)" fill="#fff">
@@ -65,37 +65,35 @@
 
                 <button class="btn btn-dark" onclick="addNFSelecionadas()">
                     <i class="alinhamento">
-                        <svg width="28px" height="28px" style="margin-top:-2px; margin-right:5px;" viewBox="0 0 24 24" fill="#fff" xmlns="http://www.w3.org/2000/svg">2
+                        <svg width="28px" height="28px" style="margin-top:-2px; margin-right:5px;" viewBox="0 0 24 24" fill="#fff" xmlns="http://www.w3.org/2000/svg">
+                            2
                             <path fill-rule="evenodd" clip-rule="evenodd" d="M3.04047 2.29242C2.6497 2.15503 2.22155 2.36044 2.08416 2.7512C1.94678 3.14197 2.15218 3.57012 2.54295 3.7075L2.80416 3.79934C3.47177 4.03406 3.91052 4.18961 4.23336 4.34802C4.53659 4.4968 4.67026 4.61723 4.75832 4.74609C4.84858 4.87818 4.91828 5.0596 4.95761 5.42295C4.99877 5.80316 4.99979 6.29837 4.99979 7.03832L4.99979 9.64C4.99979 12.5816 5.06302 13.5523 5.92943 14.4662C6.79583 15.38 8.19028 15.38 10.9792 15.38H16.2821C17.8431 15.38 18.6236 15.38 19.1753 14.9304C19.727 14.4808 19.8846 13.7164 20.1997 12.1875L20.6995 9.76275C21.0466 8.02369 21.2202 7.15417 20.7762 6.57708C20.3323 6 18.8155 6 17.1305 6H6.49233C6.48564 5.72967 6.47295 5.48373 6.4489 5.26153C6.39517 4.76515 6.27875 4.31243 5.99677 3.89979C5.71259 3.48393 5.33474 3.21759 4.89411 3.00139C4.48203 2.79919 3.95839 2.61511 3.34187 2.39838L3.04047 2.29242ZM13 8.25C13.4142 8.25 13.75 8.58579 13.75 9V10.25H15C15.4142 10.25 15.75 10.5858 15.75 11C15.75 11.4142 15.4142 11.75 15 11.75H13.75V13C13.75 13.4142 13.4142 13.75 13 13.75C12.5858 13.75 12.25 13.4142 12.25 13V11.75H11C10.5858 11.75 10.25 11.4142 10.25 11C10.25 10.5858 10.5858 10.25 11 10.25H12.25V9C12.25 8.58579 12.5858 8.25 13 8.25Z" fill="#fff" />
                             <path d="M7.5 18C8.32843 18 9 18.6716 9 19.5C9 20.3284 8.32843 21 7.5 21C6.67157 21 6 20.3284 6 19.5C6 18.6716 6.67157 18 7.5 18Z" fill="#fff" />
                             <path d="M16.5 18.0001C17.3284 18.0001 18 18.6716 18 19.5001C18 20.3285 17.3284 21.0001 16.5 21.0001C15.6716 21.0001 15 20.3285 15 19.5001C15 18.6716 15.6716 18.0001 16.5 18.0001Z" fill="#fff" />
                         </svg>
                     </i>Adicionar ao Carrinho
                 </button>
-              </div>
+            </div>
         </div>
-        <div class="col-4 ms-5 card" id="cartNF" hidden >
+        <div class="col-4 ms-5 card" id="cartNF" hidden>
             <div class="d-flex text-start border-bottom p-2">
-            <svg width="40px" height="40px" style="margin-top:12px;" viewBox="0 0 32 32" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns">
-                <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" sketch:type="MSPage">
-                    <g id="Icon-Set-Filled" sketch:type="MSLayerGroup" transform="translate(-518.000000, -725.000000)" fill="#000000">
-                        <path d="M528,751 C529.104,751 530,751.896 530,753 C530,754.104 529.104,755 528,755 C526.896,755 526,754.104 526,753 C526,751.896 526.896,751 528,751 L528,751 Z M524,753 C524,755.209 525.791,757 528,757 C530.209,757 532,755.209 532,753 C532,750.791 530.209,749 528,749 C525.791,749 524,750.791 524,753 L524,753 Z M526,747 C524.896,747 524,746.104 524,745 C524,745 547,743 546.972,743.097 C547.482,741.2 549.979,730.223 550,730 C550.054,729.45 549.553,729 549,729 L524,729 L524,727 L525,727 C525.553,727 526,726.553 526,726 C526,725.448 525.553,725 525,725 L519,725 C518.447,725 518,725.448 518,726 C518,726.553 518.447,727 519,727 L522,727 L522,745 C522,747.209 523.791,749 526,749 L549,749 C549.031,749 549,748.009 549,747 L526,747 L526,747 Z M540,751 C541.104,751 542,751.896 542,753 C542,754.104 541.104,755 540,755 C538.896,755 538,754.104 538,753 C538,751.896 538.896,751 540,751 L540,751 Z M536,753 C536,755.209 537.791,757 540,757 C542.209,757 544,755.209 544,753 C544,750.791 542.209,749 540,749 C537.791,749 536,750.791 536,753 L536,753 Z" id="cart-2" sketch:type="MSShapeGroup">
+                <svg width="40px" height="40px" style="margin-top:12px;" viewBox="0 0 32 32" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns">
+                    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" sketch:type="MSPage">
+                        <g id="Icon-Set-Filled" sketch:type="MSLayerGroup" transform="translate(-518.000000, -725.000000)" fill="#000000">
+                            <path d="M528,751 C529.104,751 530,751.896 530,753 C530,754.104 529.104,755 528,755 C526.896,755 526,754.104 526,753 C526,751.896 526.896,751 528,751 L528,751 Z M524,753 C524,755.209 525.791,757 528,757 C530.209,757 532,755.209 532,753 C532,750.791 530.209,749 528,749 C525.791,749 524,750.791 524,753 L524,753 Z M526,747 C524.896,747 524,746.104 524,745 C524,745 547,743 546.972,743.097 C547.482,741.2 549.979,730.223 550,730 C550.054,729.45 549.553,729 549,729 L524,729 L524,727 L525,727 C525.553,727 526,726.553 526,726 C526,725.448 525.553,725 525,725 L519,725 C518.447,725 518,725.448 518,726 C518,726.553 518.447,727 519,727 L522,727 L522,745 C522,747.209 523.791,749 526,749 L549,749 C549.031,749 549,748.009 549,747 L526,747 L526,747 Z M540,751 C541.104,751 542,751.896 542,753 C542,754.104 541.104,755 540,755 C538.896,755 538,754.104 538,753 C538,751.896 538.896,751 540,751 L540,751 Z M536,753 C536,755.209 537.791,757 540,757 C542.209,757 544,755.209 544,753 C544,750.791 542.209,749 540,749 C537.791,749 536,750.791 536,753 L536,753 Z" id="cart-2" sketch:type="MSShapeGroup">
 
-                        </path>
+                            </path>
+                        </g>
                     </g>
-                </g>
                 </svg> <h4 class="mt-3 ms-3 ">Carrinho</h4>
             </div>
-            <div class="heightCustomOver container-carrinho p-2">             
-                    
+            <div class="heightCustomOver container-carrinho p-2">
             </div>
             <div>
                 <button class="btn btn-dark" onclick="CalcularAntecipacao()">Calcular</button>
             </div>
         </div>
-
-    </div>
-   
+    </div>  
 </div>
 
 

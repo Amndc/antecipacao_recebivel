@@ -39,8 +39,7 @@
                     modals(data.mensagem, "ConfirmAction", visualizaNotas)
                 }
                 else {
-                    modals(data.mensagem, "alert")
-
+                    modals(data.mensagem, "ConfirmAction", AtualizaEmpresa, json)                
                 }
             }
             else {
@@ -53,6 +52,31 @@
         });
   
 });
+
+function AtualizaEmpresa(json) {
+    fetch('api/empresa/updateEmpresa', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: json
+    })
+        .then(response => response.json())
+        .then(data => {
+            if (data.sucesso == false) {             
+                
+                    modals(data.mensagem, "alert")
+                
+            }
+            else {
+                modals(data.mensagem, "sucesso")
+                visualizaNotas()
+            }
+        })
+        .catch(error => {
+            alert(`Erro ao Realizar Operação ${error}`);
+        });
+}
 
 function visualizaNotas() {
     document.getElementById("Form-CadEmpresa").hidden = true;
@@ -97,7 +121,7 @@ function listaNotas() {
         });
 }
 
-function modals(mensagem, tipo, action) {
+function modals(mensagem, tipo, action, dados) {
     switch (tipo) {
         case "sucesso":
             Swal.fire({
@@ -120,7 +144,7 @@ function modals(mensagem, tipo, action) {
                 cancelButtonText: "Cancelar"
             }).then((result) => {
                 if (result.isConfirmed) {
-                    action()
+                    action(dados)
                 }
             });
             break;
@@ -142,9 +166,9 @@ function modals(mensagem, tipo, action) {
                     clearInterval(timerInterval);
                 }
             }).then((result) => {
-               
-            });
 
+            });
+            break;
         case "alert":
             Swal.fire({
                 title: "Atenção!",
@@ -237,6 +261,15 @@ function modelCadNf(tipo, dados) {
     return saida;
 
 }
+function padronizaData(local, data) {
+    switch (local) {
+        case "tela":
+            const [ano, mes, dia] = data.split('-');
+            return data = `${dia}/${mes}/${ano}`;
+            break;
+        
+    }
+}
 
 function getDadosNF(idcard) {
     let cardNota = document.getElementById(idcard);
@@ -250,9 +283,13 @@ function getDadosNF(idcard) {
         if (elemento.value.trim() === "") {
             camposVazios.push(elemento);
             elemento.classList.add("is-invalid");
-        } else {
-            valoresInput[elemento.id] = elemento.value;
-        }        
+        }
+        else {
+
+                valoresInput[elemento.id] = elemento.value;
+            }
+     
+               
     })
 
     addNF(valoresInput);
@@ -262,10 +299,7 @@ function getDadosNF(idcard) {
 function addNF(notaFiscal) {
     let container = document.getElementsByClassName('container-Notas');
     let cnpj = sessionStorage.getItem("cnpj");
-    let teste = modelCadNf('adiciona', notaFiscal);
-
-    container[0].innerHTML = container[0].innerHTML + teste;
-
+    
     fetch(`api/empresa/${cnpj}/cadNotaFiscal`, {
         method: 'POST',
         headers: {
@@ -282,6 +316,10 @@ function addNF(notaFiscal) {
         .catch(error => {
             alert(`Erro ao Realizar Operação ${error}`)
         });
+
+    notaFiscal.datavencimento = padronizaData('tela', notaFiscal.datavencimento)
+
+    container[0].innerHTML = container[0].innerHTML + modelCadNf('adiciona', notaFiscal);
 }
 
 function discard(idcard) {
@@ -414,7 +452,7 @@ function CalcularAntecipacao() {
         })
         .then(data => {
             if (data.sucesso == false) {
-                modals(data.mensagem, "ConfirmAction", visualizaNotas);
+                modals(data.mensagem, "alert");
             } else {
                 modals(JSON.stringify( data), "sucesso");
             }
@@ -424,3 +462,8 @@ function CalcularAntecipacao() {
         });
 }
 
+function formatarMoeda(campo) {
+    let valor = campo.value.replace(/\D/g, ""); // Remove tudo que não for número
+    valor = (parseFloat(valor) / 100).toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
+    campo.value = valor;
+}

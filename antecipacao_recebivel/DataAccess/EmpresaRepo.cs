@@ -25,18 +25,19 @@ namespace antecipacao_recebivel.DataAccess
         {
             var empresaExistente = GetEmpresaPorCnpj(empresa.cnpj);
 
-
             if (empresaExistente != null)
             {
-                if (!string.Equals(empresaExistente.nome, empresa.nome, StringComparison.OrdinalIgnoreCase))
-                {            
-                    return new Resultado(false, "CNPJ já cadastrado, mas o nome informado não corresponde ao registro existente.");
+                // Verifica se o nome é diferente
+                if (!string.Equals(empresaExistente.nome, empresa.nome, StringComparison.OrdinalIgnoreCase) ||
+                    empresaExistente.faturamento != empresa.faturamento ||
+                    empresaExistente.ramo != empresa.ramo) 
+                {
+                    return new Resultado(false, "CNPJ já cadastrado, mas algumas informações não correspondem. Você quer atualizar os dados?");
                 }
                 else
-                {                   
+                {
                     return new Resultado(false, "CNPJ já cadastrado. O que deseja fazer?");
                 }
-
             }
 
             adicionarEmpresa(empresa);
@@ -47,16 +48,52 @@ namespace antecipacao_recebivel.DataAccess
             EmpresaNaoEncontrada,      
             EmpresaValida,             
             EmpresaInvalidaPorDados    
-        }
-
-        
+        }       
 
         public Empresa GetEmpresaPorCnpj(string cnpj)
         {
             var empresa = _DBrecebivel.Empresas.FirstOrDefault(e => e.cnpj == cnpj);
             
 
-            return empresa ?? throw new Exception("Empresa não encontrada");
+            return empresa ?? null;
+        }
+
+        public Resultado AtualizarEmpresa(Empresa empresa)
+        {
+            var empresaExistente = GetEmpresaPorCnpj(empresa.cnpj);
+
+            if (empresaExistente == null)
+            {
+                return new Resultado(false, "Empresa não encontrada. O CNPJ fornecido não está cadastrado.");
+            }
+            bool dadosAlterados = false;
+
+            if (!string.Equals(empresaExistente.nome, empresa.nome, StringComparison.OrdinalIgnoreCase))
+            {
+                empresaExistente.nome = empresa.nome;
+                dadosAlterados = true;
+            }
+
+            if (empresaExistente.faturamento != empresa.faturamento)
+            {
+                empresaExistente.faturamento = empresa.faturamento;
+                dadosAlterados = true;
+            }
+
+            if (empresaExistente.ramo != empresa.ramo)
+            {
+                empresaExistente.ramo = empresa.ramo;
+                dadosAlterados = true;
+            }
+
+            // Se houver alterações, atualize o banco de dados
+            if (dadosAlterados)
+            {
+                _DBrecebivel.SaveChanges(); // Assume que você está usando EF ou outro ORM.
+                return new Resultado(true, "Dados da empresa atualizados com sucesso!");
+            }
+
+            return new Resultado(false, "Nenhuma alteração foi feita nos dados da empresa.");
         }
     }
 }

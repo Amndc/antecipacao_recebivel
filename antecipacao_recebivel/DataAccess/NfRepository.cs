@@ -5,6 +5,8 @@ using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
+using System.Drawing;
+using System.Globalization;
 using System.Text.Json;
 
 namespace antecipacao_recebivel.DataAccess
@@ -56,44 +58,41 @@ namespace antecipacao_recebivel.DataAccess
           
              int prazo = (dataVencimento - dataAtual).Days;
              decimal taxa = 0.0465m; // 4.65% ao mês
-             decimal prazoEmMeses = prazo / 30m;
+             decimal prazoEmMeses = Math.Round((prazo / 30m), 2);
              
-             decimal desagio = valorNF / (decimal)Math.Pow((1 + (double)taxa), (double)prazoEmMeses);
+             decimal desagio = Math.Round((valorNF / (decimal)Math.Pow((1 + (double)taxa), (double)prazoEmMeses)), 0);
              decimal valorLiquido = desagio; // O correto é este valor
              
              return valorLiquido;
         }
 
         //calculo fixo de limite de acordo com o faturemento
-        public decimal CalcularLimiteAntecipacao(decimal faturamento, int ramo)
+        public decimal CalcularLimiteAntecipacao(string faturamento, int ramo)
         {
-            decimal porcentagem = (faturamento, ramo) switch
+            faturamento = faturamento.Replace("R$", "").Trim().Replace(".", "");
+
+            bool conversaoSucesso = decimal.TryParse(faturamento, NumberStyles.Number, new CultureInfo("pt-BR"), out decimal valorFaturamento);
+
+            if (!conversaoSucesso)
             {
-                // > R$ 100.000
-                ( >= 100001, 1) => 0.65m, // Produtos
-                ( >= 100001, 2) => 0.60m, // Serviços
+                throw new ArgumentException("O faturamento informado não está em um formato válido.");
+            }
 
-                //  R$ 50.001 e R$ 100.000
-                ( >= 50001, 1) => 0.60m, 
-                ( >= 50001, 2) => 0.55m, 
-
-                //  R$ 10.000 e R$ 50.000 
-                ( >= 10000, _) => 0.50m,
-
-                // nenhum critério, retorna 0
+            decimal porcentagem = valorFaturamento switch
+            {
+                >= 100001m when ramo == 1 => 0.65m,
+                >= 100001m when ramo == 2 => 0.60m,
+                >= 50001m when ramo == 1 => 0.60m,
+                >= 50001m when ramo == 2 => 0.55m,
+                >= 10000m and < 50001m => 0.50m,
                 _ => 0m
             };
 
-
-            if (porcentagem == 0m)
-            {
-                return 0m;
-            }
-
-            return faturamento * porcentagem;
+            // Cálculo do limite de antecipação
+            return valorFaturamento * porcentagem;
         }
 
-    
+
 
     }
 }

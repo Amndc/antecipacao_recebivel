@@ -17,9 +17,7 @@ namespace antecipacao_recebivel.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Empresa>()
-                .Property(e => e.faturamento)
-                .HasColumnType("decimal(18,2)"); 
+            
 
             modelBuilder.Entity<NotasFiscais>()
                    .HasKey(nf => nf.idnotafiscal);
