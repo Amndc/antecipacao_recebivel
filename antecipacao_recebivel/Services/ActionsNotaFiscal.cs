@@ -1,5 +1,8 @@
-﻿using antecipacao_recebivel.DataAccess;
+﻿using antecipacao_recebivel.Controllers;
+using antecipacao_recebivel.DataAccess;
 using antecipacao_recebivel.Models;
+using Microsoft.EntityFrameworkCore;
+using System.Text.Json;
 
 namespace antecipacao_recebivel.Services
 {
@@ -11,13 +14,26 @@ namespace antecipacao_recebivel.Services
         {
             _nfrepo = nfRepository;
         }
-        public Resultado validaEmpresa(NotasFiscais notasFiscais)
-        {
-            if (_nfrepo.existeNF(notasFiscais.numero))
-                return new Resultado(false, "Empresa já cadastrada!");
 
-            _nfrepo.adicionarNF(notasFiscais);
-            return new Resultado(true, "Empresa cadastrada com sucesso!");
+        public Resultado validaNotaFiscal(NotasFiscais notasFiscais, string cnpj)
+        {
+            if (_nfrepo.existeNF(notasFiscais.numero, cnpj))
+                return new Resultado(false, "Nota Fiscal Já Cadastrada!");
+
+            _nfrepo.adicionarNF(notasFiscais, cnpj);
+            return new Resultado(true, "Nota Fiscal cadastrada com sucesso!");
         }
+
+        public Resultado buscaNF (string cnpj)
+        {
+            var notas = _nfrepo.listaNF(cnpj);
+            if (notas == null || !notas.Any())
+                return new Resultado(false, "Nenhuma Nota Fiscal Encontrada!");
+
+            return new Resultado(true, JsonSerializer.Serialize(notas));
+            
+        }
+
+       
     }
 }

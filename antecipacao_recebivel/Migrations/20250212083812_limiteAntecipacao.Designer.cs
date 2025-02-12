@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using antecipacao_recebivel.Data;
 
@@ -11,9 +12,11 @@ using antecipacao_recebivel.Data;
 namespace antecipacao_recebivel.Migrations
 {
     [DbContext(typeof(DbContextRecebivel))]
-    partial class DbContextRecebivelModelSnapshot : ModelSnapshot
+    [Migration("20250212083812_limiteAntecipacao")]
+    partial class limiteAntecipacao
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

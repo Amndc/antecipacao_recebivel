@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using antecipacao_recebivel.Data;
 
@@ -11,9 +12,11 @@ using antecipacao_recebivel.Data;
 namespace antecipacao_recebivel.Migrations
 {
     [DbContext(typeof(DbContextRecebivel))]
-    partial class DbContextRecebivelModelSnapshot : ModelSnapshot
+    [Migration("20250212020544_NotaFiscal")]
+    partial class NotaFiscal
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -49,28 +52,6 @@ namespace antecipacao_recebivel.Migrations
                     b.ToTable("Empresas");
                 });
 
-            modelBuilder.Entity("antecipacao_recebivel.Models.LimiteAntecipacao", b =>
-                {
-                    b.Property<int>("id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"));
-
-                    b.Property<decimal>("faixaMax")
-                        .HasColumnType("decimal(18, 2)");
-
-                    b.Property<decimal>("faixaMin")
-                        .HasColumnType("decimal(18, 2)");
-
-                    b.Property<int>("porcentagem")
-                        .HasColumnType("int");
-
-                    b.HasKey("id");
-
-                    b.ToTable("LimiteAntecipacao", (string)null);
-                });
-
             modelBuilder.Entity("antecipacao_recebivel.Models.NotasFiscais", b =>
                 {
                     b.Property<int>("idnotafiscal")
@@ -79,8 +60,8 @@ namespace antecipacao_recebivel.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("idnotafiscal"));
 
-                    b.Property<DateTime>("datavencimento")
-                        .HasColumnType("datetime2");
+                    b.Property<DateOnly>("datavencimento")
+                        .HasColumnType("date");
 
                     b.Property<int>("idempresa")
                         .HasColumnType("int");
@@ -88,9 +69,6 @@ namespace antecipacao_recebivel.Migrations
                     b.Property<string>("numero")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<decimal>("valor")
-                        .HasColumnType("decimal(18,2)");
 
                     b.HasKey("idnotafiscal");
 

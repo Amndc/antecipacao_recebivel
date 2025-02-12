@@ -12,14 +12,15 @@ namespace antecipacao_recebivel.Rules
         {
             _empresaRepo = empresaRepo;
         }
-        public Resultado validaEmpresa(Empresa empresa)
+        public Resultado validaEmpresaExiste(Empresa empresa)
         {
             if(_empresaRepo.existeEmpresa(empresa.cnpj))
-                return new Resultado(false, "Empresa já cadastrada!");
+                return new Resultado(false, "Empresa já cadastrada, Deseja Visualizar os Dados?");
 
-            _empresaRepo.Adicionar(empresa);
+            _empresaRepo.adicionarEmpresa(empresa);
             return new Resultado(true, "Empresa cadastrada com sucesso!");
         }
+        
 
 
     }       

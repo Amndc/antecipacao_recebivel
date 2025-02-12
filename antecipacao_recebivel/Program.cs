@@ -2,6 +2,7 @@ using antecipacao_recebivel.Data;
 using antecipacao_recebivel.DataAccess;
 using antecipacao_recebivel.Models;
 using antecipacao_recebivel.Rules;
+using antecipacao_recebivel.Services;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -12,6 +13,8 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddAuthorization();
 builder.Services.AddScoped<ActionsEmpresa>();
 builder.Services.AddScoped<EmpresaRepo>();
+builder.Services.AddScoped<ActionsNotaFiscal>();
+builder.Services.AddScoped<NfRepository>();
 builder.Services.AddControllers();
 
 // Add services to the container.
